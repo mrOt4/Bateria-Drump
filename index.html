@@ -4,21 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">
     <title>Drum Pad</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
-    <script src="./script.js"></script>
 
     <h1>Batería Virtual</h1>
-
+    
     <div class="botones">
         <button id="light-sun">🌞</button>
         <button id="dark-moon">🌝</button>
     </div>
-
-  
+    
     <div id="drum-pad-container">
         <div class="drum-pad" data-key="65">A</div>
         <div class="drum-pad" data-key="83">S</div>
@@ -31,16 +30,42 @@
         <div class="drum-pad" data-key="67">C</div>
     </div>
 
-    <audio data-key="65" src="./sounds/crash.wav"></audio>
-    <audio data-key="83" src="./sounds/hihat-close.wav"></audio>
-    <audio data-key="68" src="./sounds/hihat-open.wav"></audio>
-    <audio data-key="70" src="./sounds/kick.wav"></audio>
-    <audio data-key="87" src="./sounds/ride.wav"></audio>
-    <audio data-key="69" src="./sounds/snare.wav"></audio>
-    <audio data-key="82" src="./sounds/tom-high.wav"></audio>
-    <audio data-key="88" src="./sounds/tom-low.wav"></audio>
-    <audio data-key="67" src="./sounds/tom-mid.wav"></audio>
+    <audio data-key="65" src="sounds/crash.wav"></audio>
+    <audio data-key="83" src="sounds/hihat-close.wav"></audio>
+    <audio data-key="68" src="sounds/hihat-open.wav"></audio>
+    <audio data-key="70" src="sounds/kick.wav"></audio>
+    <audio data-key="87" src="sounds/ride.wav"></audio>
+    <audio data-key="69" src="sounds/snare.wav"></audio>
+    <audio data-key="82" src="sounds/tom-high.wav"></audio>
+    <audio data-key="88" src="sounds/tom-low.wav"></audio>
+    <audio data-key="67" src="sounds/tom-mid.wav"></audio>
 
+    <script>
+        const drumPads = document.querySelectorAll('.drum-pad');
+        const audios = document.querySelectorAll('audio');
+
+        drumPads.forEach(pad => {
+            pad.addEventListener('click', () => {
+                playSound(pad);
+            });
+        });
+
+        window.addEventListener('keydown', (al) => {
+            const key = al.keyCode.toString();
+            const pad = document.querySelector(`.drum-pad[data-key="${key}"]`);
+            if (pad) {
+                playSound(pad);
+            }
+        });
+
+        function playSound(pad) {
+            const key = pad.getAttribute('data-key');
+            const audio = document.querySelector(`audio[data-key="${key}"]`);
+            if (!audio) return;
+            audio.currentTime = 0; // Rewind to the start
+            audio.play();
+        }
+    </script>
 
 </body>
 

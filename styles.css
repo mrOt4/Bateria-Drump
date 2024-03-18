@@ -1,11 +1,3 @@
-/* CSS reset */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -25,8 +17,8 @@ body {
 .drum-pad {
     width: 100px;
     height: 100px;
-    background-color: #ccc; /* Color base */
-    border: 2px solid #333; /* Borde sólido */
+    background-color: #ccc;
+    border: 2px solid #333;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -37,12 +29,11 @@ body {
 }
 
 .drum-pad:hover {
-    background-color: #999; /* Cambio de color al pasar el mouse */
+    background-color: #999;
 }
 
-/* Ajustes específicos para simular botones de Maschine */
 .drum-pad:active {
-    background-color: #666; /* Cambio de color al hacer clic */
+    background-color: #666;
 }
 
 .drum-pad:active::after {
