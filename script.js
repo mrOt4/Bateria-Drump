@@ -1,10 +1,9 @@
-"use strict";
-
 const drumPads = document.querySelectorAll(".drum-pad");
 const audios = document.querySelectorAll("audio");
 
 drumPads.forEach((pad) => {
   pad.addEventListener("click", () => {
+    console.log("Clicked:", pad.getAttribute("data-key"));
     playSound(pad);
   });
 });
