@@ -40,33 +40,6 @@
     <audio data-key="88" src="sounds/tom-low.wav"></audio>
     <audio data-key="67" src="sounds/tom-mid.wav"></audio>
 
-    <script>
-        const drumPads = document.querySelectorAll('.drum-pad');
-        const audios = document.querySelectorAll('audio');
-
-        drumPads.forEach(pad => {
-            pad.addEventListener('click', () => {
-                playSound(pad);
-            });
-        });
-
-        window.addEventListener('keydown', (al) => {
-            const key = al.keyCode.toString();
-            const pad = document.querySelector(`.drum-pad[data-key="${key}"]`);
-            if (pad) {
-                playSound(pad);
-            }
-        });
-
-        function playSound(pad) {
-            const key = pad.getAttribute('data-key');
-            const audio = document.querySelector(`audio[data-key="${key}"]`);
-            if (!audio) return;
-            audio.currentTime = 0; // Rewind to the start
-            audio.play();
-        }
-    </script>
-
 </body>
 
 </html>
