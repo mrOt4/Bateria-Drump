@@ -56,3 +56,34 @@ body {
     background-color: #1a1a1a;
     color: #ffffff;
 }
+
+
+
+/* este estilo lo saque de una pagina por si lo quieres meter
+es solo para la barra de volumen */
+#volumen {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 20px;
+    background: #f3f3f3;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 0;
+    margin: 20px;
+}
+
+#volumen::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #0078d4;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+#volumen:focus {
+    outline: none;
+}

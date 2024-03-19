@@ -13,12 +13,16 @@
 
     <h1>Batería Virtual</h1>
 
+    <!--? Creamos las clases botones para añadir el modo oscuro y el modo claro -->
     <div class="botones">
         <button id="light-sun">🌞</button>
         <button id="dark-moon">🌝</button>
     </div>
     
+    <!--? Generamos el contenedor para la bateria virtual-->
     <div id="drum-pad-container">
+        <!--! dentro del contenedor un contenedor individual para cada letra -->
+        <!--! que tengamos dentro de nuestra batería -->
         <div class="drum-pad" data-key="65">A</div>
         <div class="drum-pad" data-key="83">S</div>
         <div class="drum-pad" data-key="68">D</div>
@@ -30,6 +34,7 @@
         <div class="drum-pad" data-key="67">C</div>
     </div>
 
+    <!--? Elementos de audio para cada sonido de la batería, asociados a una tecla específica. -->
     <audio data-key="65" src="sounds/crash.wav"></audio>
     <audio data-key="83" src="sounds/hihat-close.wav"></audio>
     <audio data-key="68" src="sounds/hihat-open.wav"></audio>
@@ -39,6 +44,10 @@
     <audio data-key="82" src="sounds/tom-high.wav"></audio>
     <audio data-key="88" src="sounds/tom-low.wav"></audio>
     <audio data-key="67" src="sounds/tom-mid.wav"></audio>
+
+    <!--? Control deslizante para ajustar el volumen de los sonidos de la batería,-->
+    <!--?  con un rango de valores entre 1 y 100. Empieza en 100 siempre que se entra -->
+    <input type="range" id="volumen" min="1" max="100" step="1" value="100">
 
 </body>
 
