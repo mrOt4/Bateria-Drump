@@ -1,3 +1,5 @@
+"use strict"
+
 //******************************** */
 //*********Escuchadores*********** */
 //******************************** */
@@ -77,3 +79,80 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("dark-mode");
   });
 });
+
+const record = document.querySelector(".grabadora");
+const stop = document.querySelector(".stop-grabadora");
+const grabacion = document.querySelector(".grabación");
+
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  console.log("getUserMedia supported.");
+  navigator.mediaDevices.getUserMedia(
+    {
+      audio: true,
+    },
+)
+.then((stream) => {
+  const mediaRecorder = new MediaRecorder(stream);
+  grabacion.onclick = () => {
+    mediaRecorder.start();
+    console.log(mediaRecorder.state);
+    console.log("Grabación comenzada");
+    grabacion.style.background = "red";
+    grabacion.style.color = "black";
+
+    let chunks = [];
+mediaRecorder.ondataavailable = (e) => {
+  chunks.push(e.data);
+};
+
+stop.onclick = () => {
+  mediaRecorder.stop();
+  console.log(mediaRecorder.state);
+  console.log("Grabación terminada");
+  grabacion.style.background = "";
+  grabacion.style.color = "";
+};
+ //aquí
+
+ mediaRecorder.onstop = (e) => {
+  console.log("Grabación terminada");
+
+  const clipName = prompt("Nombra tu clip");
+
+  const clipContainer = document.createElement("article");
+  const clipLabel = document.createElement("p");
+  const audio = document.createElement("audio");
+  const deleteButton = document.createElement("button");
+
+  clipContainer.classList.add("clip");
+  audio.setAttribute("controls", "");
+  deleteButton.innerHTML = "Delete";
+  clipLabel.innerHTML = clipName;
+
+  clipContainer.appendChild(audio);
+  clipContainer.appendChild(clipLabel);
+  clipContainer.appendChild(deleteButton);
+  soundClips.appendChild(clipContainer);
+
+  const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+  chunks = [];
+  const audioURL = window.URL.createObjectURL(blob);
+  audio.src = audioURL;
+
+  deleteButton.onclick = (e) => {
+    let evtTgt = e.target;
+    evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+  };
+};
+
+};
+})
+
+.catch((err) => {
+  console.error(`Ha ocurrido el siguiente error de getUserMedia: ${err}`);
+});
+}
+else {
+  console.log("Tu navegador no es compatible con este getUserMedia :( ")
+}
+
