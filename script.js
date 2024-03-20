@@ -77,3 +77,98 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("dark-mode");
   });
 });
+
+//***************************** */
+//*********** GRABAR ********** */
+//***************************** */
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Seleccionamos los elementos relevantes del DOM
+  const record = document.querySelector(".grabadora"); // Botón de grabar
+  const stop = document.querySelector(".stop-grabadora"); // Botón de detener grabación
+  const grabacion = document.querySelector(".grabacion"); // Mensaje de estado de la grabación
+  const soundClips = document.querySelector(".soundClips"); // Contenedor de las grabaciones
+
+  // Variables para la grabación de audio
+  let mediaRecorder;
+  let chunks = []; // Almacena los fragmentos de audio grabados
+  let isRecording = false; // Indica si se está grabando actualmente
+
+  // Función para reproducir el sonido asociado a una tecla
+  function playSound(key) {
+    // Buscamos el elemento de audio asociado a la tecla presionada
+    const audio = document.querySelector(`audio[data-key="${key}"]`);
+    // Verificamos si se encontró el audio
+    if (audio) {
+      audio.currentTime = 0; // Reiniciamos la reproducción
+      audio.play(); // Reproducimos el sonido
+    }
+  }
+
+  // Agregamos un listener para detectar cuando se presionan teclas
+  window.addEventListener("keydown", function (e) {
+    // Verificamos si no se está grabando actualmente
+    if (!isRecording) {
+      const key = e.keyCode.toString(); // Obtenemos el código de la tecla presionada
+      console.log("Tecla presionada:", key);
+      playSound(key); // Reproducimos el sonido asociado a la tecla
+    }
+  });
+
+  // Verificamos si el navegador soporta la API getUserMedia para grabación de audio
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    console.log("getUserMedia soportado.");
+    // Solicitamos acceso al micrófono
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(function (stream) {
+        // Creamos un MediaRecorder para grabar el audio del micrófono
+        mediaRecorder = new MediaRecorder(stream);
+
+        // Listener para iniciar la grabación
+        record.addEventListener("click", function () {
+          mediaRecorder.start(); // Iniciamos la grabación
+          isRecording = true; // Indicamos que se está grabando
+          console.log("Grabación iniciada");
+          grabacion.textContent = "Grabando..."; // Actualizamos el mensaje de estado
+          grabacion.style.color = "red"; // Cambiamos el color del mensaje
+          record.disabled = true; // Desactivamos el botón de grabar
+          stop.disabled = false; // Activamos el botón de detener grabación
+        });
+
+        // Listener para detener la grabación
+        stop.addEventListener("click", function () {
+          mediaRecorder.stop(); // Detenemos la grabación
+          isRecording = false; // Indicamos que se ha detenido la grabación
+          console.log("Grabación detenida");
+          grabacion.textContent = "Grabación detenida"; // Actualizamos el mensaje de estado
+          grabacion.style.color = "black"; // Restauramos el color del mensaje
+          record.disabled = false; // Activamos el botón de grabar
+          stop.disabled = true; // Desactivamos el botón de detener grabación
+        });
+
+        // Evento que se dispara cuando hay datos disponibles en la grabación
+        mediaRecorder.ondataavailable = function (e) {
+          chunks.push(e.data); // Agregamos los datos al array de chunks
+        };
+
+        // Evento que se dispara cuando se detiene la grabación
+        mediaRecorder.onstop = function () {
+          const clipName = prompt("Nombre de tu grabación:"); // Solicitamos al usuario un nombre para la grabación
+          const audioBlob = new Blob(chunks, { type: "audio/webm" }); // Creamos un Blob a partir de los chunks
+          const audioURL = URL.createObjectURL(audioBlob); // Creamos una URL para el audio grabado
+
+          // Creamos elementos HTML para mostrar la grabación
+          const clipContainer = document.createElement("article");
+          const audioElement = document.createElement("audio");
+          const clipLabel = document.createElement("p");
+          const deleteButton = document.createElement("button");
+
+          // Configuramos los elementos HTML
+          audioElement.controls = true; // Agregamos controles de reproducción al elemento de audio
+          audioElement.src = audioURL; // Establecemos la URL del audio
+          clipLabel.textContent = clipName || "Grabación sin nombre"; // Establecemos el nombre
+        };
+      });
+  }
+});
