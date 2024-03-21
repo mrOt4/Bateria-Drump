@@ -7,34 +7,48 @@
     <title>Drum Pad</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
+
+    <!-- Enlaces para cargar la fuente Roboto desde Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <h1>Batería Virtual</h1>
+    <h1>Drumpad Virtual</h1>
 
-    <!--? Creamos las clases botones para añadir el modo oscuro y el modo claro -->
-    <div class="botones">
-        <button id="light-sun">🌞</button>
-        <button id="dark-moon">🌝</button>
+     <!-- Switch para cambiar entre el modo oscuro y claro -->
+
+    <div class="switch-container">
+        <input type="checkbox" id="switch" class="switch-input">
+        <label for="switch" class="switch-label">
+            <span class="switch-inner"></span>
+            <span class="switch-switch"></span>
+        </label>
     </div>
 
-    <!--? Generamos el contenedor para la bateria virtual-->
-    <div id="drum-pad-container">
-        <!--! dentro del contenedor un contenedor individual para cada letra -->
-        <!--! que tengamos dentro de nuestra batería -->
-        <div class="drum-pad" data-key="65">A</div>
-        <div class="drum-pad" data-key="83">S</div>
-        <div class="drum-pad" data-key="68">D</div>
-        <div class="drum-pad" data-key="70">F</div>
-        <div class="drum-pad" data-key="87">W</div>
-        <div class="drum-pad" data-key="69">E</div>
-        <div class="drum-pad" data-key="82">R</div>
-        <div class="drum-pad" data-key="88">X</div>
-        <div class="drum-pad" data-key="67">C</div>
+    <!-- Contenedor para los drum pads virtuales -->
+
+    <div id="drum-pad-row">
+        <div id="drum-pad-container">
+            <!-- Drum pads individuales -->
+            <!-- Cada drum pad tiene asignada una tecla y produce un sonido específico -->
+            <div class="drum-pad" data-key="65">A</div>
+            <div class="drum-pad" data-key="83">S</div>
+            <div class="drum-pad" data-key="68">D</div>
+            <div class="drum-pad" data-key="70">F</div>
+            <div class="drum-pad" data-key="87">W</div>
+            <div class="drum-pad" data-key="69">E</div>
+            <div class="drum-pad" data-key="82">R</div>
+            <div class="drum-pad" data-key="88">X</div>
+            <div class="drum-pad" data-key="67">C</div>
+        </div>
     </div>
 
-    <!--? Elementos de audio para cada sonido de la batería, asociados a una tecla específica. -->
+    <!-- Elementos de audio asociados a cada drum pad -->
+
     <audio data-key="65" src="sounds/crash.wav"></audio>
     <audio data-key="83" src="sounds/hihat-close.wav"></audio>
     <audio data-key="68" src="sounds/hihat-open.wav"></audio>
@@ -45,10 +59,12 @@
     <audio data-key="88" src="sounds/tom-low.wav"></audio>
     <audio data-key="67" src="sounds/tom-mid.wav"></audio>
 
-    <!--? Control deslizante para ajustar el volumen de los sonidos de la batería,-->
-    <!--?  con un rango de valores entre 1 y 100. Empieza en 100 siempre que se entra -->
+    <!-- Control deslizante para ajustar el volumen -->
+    <!-- Tiene un rango de valores entre 1 y 100 y empieza en 100 -->
+    
     <input type="range" id="volumen" min="1" max="100" step="1" value="100">
 
+    <!-- Botones para grabar y detener la grabación -->
 
     <button class="grabadora">Grabar🔴</button>
     <button class="stop-grabadora">Dejar de grabar ⏹️</button>

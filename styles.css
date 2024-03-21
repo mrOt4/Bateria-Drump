@@ -1,41 +1,58 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
+/* Establece la fuente Roboto para todo el contenido del body */
+body * {
+    font-family: "Roboto", sans-serif;
+}
+
+/* Estilos para la fila de drum pads */
+#drum-pad-row {
+    border: 1px solid yellow;
     display: flex;
     justify-content: center;
+    padding: 50px 0;
+
 }
 
+/* Estilos para el contenedor de drum pads */
 #drum-pad-container {
-    display: grid;
-    grid-template-columns: repeat(4, 100px);
-    grid-gap: 20px;
-    max-width: 600px;
+    background-color: #57bc09;
+    border: 1px solid red;
+    flex-wrap: wrap;
+    padding: 20px;
+    display: flex;
+    width: 70vw;
+    height: 70vw;
+    border-radius: 20px;
 }
 
+/* Estilos para los pads de batería */
 .drum-pad {
-    width: 100px;
-    height: 100px;
-    background-color: #ccc;
-    border: 2px solid #333;
-    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: black;
+    width: calc(33.33% - 10px);
+    height: calc(33.33% - 10px);
+    background-color: #ddd;
+    border: 1px solid #888;
+    box-sizing: border-box;
+    margin: 5px;
+    border-radius: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    font-size: 24px;
-    transition: background-color 0.3s ease;
+    transition: 100ms ease-in;
 }
 
+/* Estilos al pasar el cursor sobre los pads */
 .drum-pad:hover {
-    background-color: #999;
+    background-color: #57bc09;
 }
 
+/* Estilos al presionar los pads */
 .drum-pad:active {
-    background-color: #666;
+    background-color: #160d76;
 }
 
+/* Estilos adicionales al presionar los pads */
 .drum-pad:active::after {
     content: "";
     position: absolute;
@@ -47,11 +64,13 @@ body {
     border-radius: 10px;
 }
 
+/* Estilos para el modo claro */
 .light-mode {
     background-color: #ffffff;
     color: #000000;
 }
 
+/* Estilos para el modo oscuro */
 .dark-mode {
     background-color: #1a1a1a;
     color: #ffffff;
@@ -59,8 +78,7 @@ body {
 
 
 
-/* este estilo lo saque de una pagina por si lo quieres meter
-es solo para la barra de volumen */
+/* Estilos para la barra de volumen. Temporal*/ 
 #volumen {
     -webkit-appearance: none;
     width: 200px;
@@ -72,6 +90,7 @@ es solo para la barra de volumen */
     padding: 0;
     margin: 20px;
 }
+
 
 #volumen::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -87,3 +106,47 @@ es solo para la barra de volumen */
 #volumen:focus {
     outline: none;
 }
+
+//* Estilos para el switch de dark mode */
+
+.switch-container {
+    position: relative;
+}
+
+.switch-input {
+    display: none;
+    /* Oculta el input checkbox */
+}
+
+.switch-label {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+}
+
+.switch-inner {
+    display: block;
+    width: 26px;
+    height: 26px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: left 0.3s ease;
+}
+
+/* Estilos para el switch cuando está activado */
+.switch-input:checked+.switch-label .switch-inner {
+    left: calc(100% - 28px);
+}
+
+.switch-switch {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;

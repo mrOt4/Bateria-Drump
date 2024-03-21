@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //* escuchamos cuando preciona la tecla
+  //* escuchamos cuando presiona la tecla
   window.addEventListener("keydown", (e) => {
     //! de esto sacamos el numero de la tecla y llamamos al a funcion si existe
     const key = e.keyCode.toString();
@@ -46,36 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
     audio.currentTime = 0; //! rebobina al principio
     audio.play(); //!reproduce el que encontró
   }
-});
-
-//***************************** */
-//*******CAMBIO COLOR TEMA***** */
-//***************************** */
-
-//? Volvemos a cargar el DOM
-document.addEventListener("DOMContentLoaded", function () {
-  //* Selecionamos los elementos de las clases marcadas y los guardamos en unas
-  //* nuevas variables
-  const light = document.getElementById("light-sun");
-  const dark = document.getElementById("dark-moon");
-
-  //* vemos que si hace click en el div de liht entonces
-  light.addEventListener("click", function () {
-    //! quita la clase priviamente añadida en el css
-    document.body.classList.remove("dark-mode");
-    //! añade la clase priviamente añadida en el css
-    //! esto lo hacemos por si cambia muchas veces de claro a oscuro
-    document.body.classList.add("light-mode");
-  });
-
-  //* vemos que si hace click en el div de dark entonces
-  dark.addEventListener("click", function () {
-    //! quita la clase priviamente añadida en el css
-    document.body.classList.remove("light-mode");
-    //! añade la clase priviamente añadida en el css
-    //! esto lo hacemos por si cambia muchas veces de claro a oscuro
-    document.body.classList.add("dark-mode");
-  });
 });
 
 //***************************** */
@@ -172,3 +142,17 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 });
+
+//***************************** */
+//******* SWITCH DARKMODE ***** */
+//***************************** */
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const switchInput = document.getElementById('switch'); 
+  switchInput.addEventListener('change', () => {
+      console.log(switchInput)  
+      document.body.classList.toggle('dark-mode'); 
+  });
+});
+
