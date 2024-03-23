@@ -1,81 +1,100 @@
 /* Establece la fuente Roboto para todo el contenido del body */
 body * {
     font-family: "Roboto", sans-serif;
+    
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Estilos para la fila de drum pads */
 #drum-pad-row {
-    border: 1px solid yellow;
     display: flex;
     justify-content: center;
     padding: 50px 0;
-
 }
 
 /* Estilos para el contenedor de drum pads */
 #drum-pad-container {
-    background-color: #57bc09;
-    border: 1px solid red;
+    background-color: #B6BBC4;
+    border: 1px solid #F0ECE5;
     flex-wrap: wrap;
     padding: 20px;
     display: flex;
     width: 70vw;
     height: 70vw;
     border-radius: 20px;
+    max-width: 700px;
+    max-height: 700px
 }
 
 /* Estilos para los pads de batería */
 .drum-pad {
     font-size: 20px;
     font-weight: 700;
-    color: black;
     width: calc(33.33% - 10px);
     height: calc(33.33% - 10px);
-    background-color: #ddd;
-    border: 1px solid #888;
     box-sizing: border-box;
     margin: 5px;
     border-radius: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 100ms ease-in;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(11, 131, 119, 0);
+    
+}
+
+/* Animación para el parpadeo neon */
+@keyframes neon-glow {
+    0% {
+        background-color: #007bff;
+        box-shadow: 0 0 10px rgba(11, 131, 119, 0); /* Sin sombra */
+    }
+    50% {
+        background-color: #FF1493; /* Color de neón 1 */
+        box-shadow: 0 0 20px 5px rgba(11, 131, 119, 0.5); /* Sombra con mayor intensidad */
+    }
+    100% {
+        background-color: #007bff;
+        box-shadow: 0 0 10px rgba(11, 131, 119, 0); /* Sin sombra */
+    }
 }
 
 /* Estilos al pasar el cursor sobre los pads */
-.drum-pad:hover {
-    background-color: #57bc09;
+.drum-pad:hover, .drum-pad.pressed {
+    animation: neon-glow 0.3s infinite; /* Aplicar la animación */
 }
 
 /* Estilos al presionar los pads */
-.drum-pad:active {
-    background-color: #160d76;
+.drum-pad:active, .drum-pad.pressed {
+    transform: scale(0.9);
+    background-color: #0056b3;
+    box-shadow: 0 0 20px 5px rgba(11, 131, 119, 0.5);
+
 }
 
-/* Estilos adicionales al presionar los pads */
-.drum-pad:active::after {
-    content: "";
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    right: 1px;
-    bottom: 1px;
-    border: 2px solid #333;
-    border-radius: 10px;
-}
-
-/* Estilos para el modo claro */
-.light-mode {
-    background-color: #ffffff;
-    color: #000000;
-}
 
 /* Estilos para el modo oscuro */
 .dark-mode {
     background-color: #1a1a1a;
     color: #ffffff;
+    
+
 }
 
+body.dark-mode #drum-pad-container {
+    background-color: #A0153E;
+}
 
 
 /* Estilos para la barra de volumen. Temporal*/ 
@@ -107,7 +126,7 @@ body * {
     outline: none;
 }
 
-//* Estilos para el switch de dark mode */
+/* Estilos para el switch de dark mode */
 
 .switch-container {
     position: relative;
@@ -122,10 +141,14 @@ body * {
     display: inline-block;
     width: 60px;
     height: 30px;
-    background-color: #ccc;
+    background-color: #dede06;
     border-radius: 15px;
     position: relative;
     cursor: pointer;
+}
+
+.switch-label.active {
+    background-color: rgb(21, 15, 137)
 }
 
 .switch-inner {
@@ -138,6 +161,15 @@ body * {
     top: 2px;
     left: 2px;
     transition: left 0.3s ease;
+    background-image: url("./imgs/sun.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%   
+}
+
+.switch-inner.active {
+    background-image: url("./imgs/moon.svg");
+    background-size: 70%
 }
 
 /* Estilos para el switch cuando está activado */
@@ -150,3 +182,7 @@ body * {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+}
+
+
+

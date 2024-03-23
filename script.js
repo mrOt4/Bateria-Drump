@@ -28,15 +28,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  //* escuchamos cuando presiona la tecla
-  window.addEventListener("keydown", (e) => {
-    //! de esto sacamos el numero de la tecla y llamamos al a funcion si existe
-    const key = e.keyCode.toString();
-    const pad = document.querySelector(`.drum-pad[data-key="${key}"]`);
-    if (pad) {
+  // Escuchamos cuando presiona la tecla
+window.addEventListener("keydown", (e) => {
+  // Obtenemos el número de la tecla y llamamos a la función si existe
+  const key = e.keyCode.toString();
+  const pad = document.querySelector(`.drum-pad[data-key="${key}"]`);
+  if (pad) {
+      pad.classList.add('pressed'); // Agregamos la clase pressed
+      setTimeout(() => {
+          pad.classList.remove('pressed'); // Eliminamos la clase pressed después de 100 milisegundos
+      }, 300);
       playSound(pad);
-    }
-  });
+  }
+});
 
   //*tomamos como valor el 'data-key' y buscamos el elemento audio correspondiente
   function playSound(pad) {
@@ -53,95 +57,55 @@ document.addEventListener("DOMContentLoaded", function () {
 //***************************** */
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Seleccionamos los elementos relevantes del DOM
-  const record = document.querySelector(".grabadora"); // Botón de grabar
-  const stop = document.querySelector(".stop-grabadora"); // Botón de detener grabación
-  const grabacion = document.querySelector(".grabacion"); // Mensaje de estado de la grabación
-  const soundClips = document.querySelector(".soundClips"); // Contenedor de las grabaciones
+  // Resto del código...
 
-  // Variables para la grabación de audio
-  let mediaRecorder;
-  let chunks = []; // Almacena los fragmentos de audio grabados
-  let isRecording = false; // Indica si se está grabando actualmente
+  // Variables para la grabación de la secuencia
+  let secuenciaGrabada = []; // Almacena las teclas pulsadas durante la grabación
+  let grabandoSecuencia = false; // Indica si se está grabando una secuencia
 
-  // Función para reproducir el sonido asociado a una tecla
-  function playSound(key) {
-    // Buscamos el elemento de audio asociado a la tecla presionada
-    const audio = document.querySelector(`audio[data-key="${key}"]`);
-    // Verificamos si se encontró el audio
-    if (audio) {
-      audio.currentTime = 0; // Reiniciamos la reproducción
-      audio.play(); // Reproducimos el sonido
-    }
-  }
-
-  // Agregamos un listener para detectar cuando se presionan teclas
-  window.addEventListener("keydown", function (e) {
-    // Verificamos si no se está grabando actualmente
-    if (!isRecording) {
-      const key = e.keyCode.toString(); // Obtenemos el código de la tecla presionada
-      console.log("Tecla presionada:", key);
-      playSound(key); // Reproducimos el sonido asociado a la tecla
-    }
+  // Listener para grabar la secuencia
+  const grabarSecuenciaBtn = document.querySelector(".grabar-secuencia");
+  grabarSecuenciaBtn.addEventListener("click", function () {
+    secuenciaGrabada = []; // Reiniciamos la secuencia grabada
+    grabandoSecuencia = true; // Indicamos que se está grabando la secuencia
+    console.log("Grabando secuencia...");
   });
 
-  // Verificamos si el navegador soporta la API getUserMedia para grabación de audio
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    console.log("getUserMedia soportado.");
-    // Solicitamos acceso al micrófono
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then(function (stream) {
-        // Creamos un MediaRecorder para grabar el audio del micrófono
-        mediaRecorder = new MediaRecorder(stream);
+  // Listener para reproducir la secuencia
+  const reproducirSecuenciaBtn = document.querySelector(".reproducir-secuencia");
+  reproducirSecuenciaBtn.addEventListener("click", function () {
+    reproducirSecuencia();
+  });
 
-        // Listener para iniciar la grabación
-        record.addEventListener("click", function () {
-          mediaRecorder.start(); // Iniciamos la grabación
-          isRecording = true; // Indicamos que se está grabando
-          console.log("Grabación iniciada");
-          grabacion.textContent = "Grabando..."; // Actualizamos el mensaje de estado
-          grabacion.style.color = "red"; // Cambiamos el color del mensaje
-          record.disabled = true; // Desactivamos el botón de grabar
-          stop.disabled = false; // Activamos el botón de detener grabación
-        });
+  // Función para reproducir la secuencia grabada
+  function reproducirSecuencia() {
+    if (secuenciaGrabada.length === 0) {
+      console.log("No hay secuencia grabada para reproducir.");
+      return;
+    }
+    console.log("Reproduciendo secuencia...");
+    secuenciaGrabada.forEach((key, index) => {
+      setTimeout(() => {
+        playSound(key);
+      }, index * 500); // Reproduce cada sonido con un intervalo de 500ms
+    });
+  }
 
-        // Listener para detener la grabación
-        stop.addEventListener("click", function () {
-          mediaRecorder.stop(); // Detenemos la grabación
-          isRecording = false; // Indicamos que se ha detenido la grabación
-          console.log("Grabación detenida");
-          grabacion.textContent = "Grabación detenida"; // Actualizamos el mensaje de estado
-          grabacion.style.color = "black"; // Restauramos el color del mensaje
-          record.disabled = false; // Activamos el botón de grabar
-          stop.disabled = true; // Desactivamos el botón de detener grabación
-        });
+  // Resto del código...
 
-        // Evento que se dispara cuando hay datos disponibles en la grabación
-        mediaRecorder.ondataavailable = function (e) {
-          chunks.push(e.data); // Agregamos los datos al array de chunks
-        };
-
-        // Evento que se dispara cuando se detiene la grabación
-        mediaRecorder.onstop = function () {
-          const clipName = prompt("Nombre de tu grabación:"); // Solicitamos al usuario un nombre para la grabación
-          const audioBlob = new Blob(chunks, { type: "audio/webm" }); // Creamos un Blob a partir de los chunks
-          const audioURL = URL.createObjectURL(audioBlob); // Creamos una URL para el audio grabado
-
-          // Creamos elementos HTML para mostrar la grabación
-          const clipContainer = document.createElement("article");
-          const audioElement = document.createElement("audio");
-          const clipLabel = document.createElement("p");
-          const deleteButton = document.createElement("button");
-
-          // Configuramos los elementos HTML
-          audioElement.controls = true; // Agregamos controles de reproducción al elemento de audio
-          audioElement.src = audioURL; // Establecemos la URL del audio
-          clipLabel.textContent = clipName || "Grabación sin nombre"; // Establecemos el nombre
-        };
-      });
+  // Modificamos la función playSound para que registre las teclas pulsadas durante la grabación
+  function playSound(pad) {
+    const key = pad.getAttribute("data-key");
+    const audio = document.querySelector(`audio[data-key="${key}"]`);
+    if (!audio) return;
+    audio.currentTime = 0;
+    audio.play();
+    if (grabandoSecuencia) {
+      secuenciaGrabada.push(key); // Registra la tecla pulsada durante la grabación
+    }
   }
 });
+
 
 //***************************** */
 //******* SWITCH DARKMODE ***** */
@@ -149,10 +113,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const switchInput = document.getElementById('switch'); 
-  switchInput.addEventListener('change', () => {
-      console.log(switchInput)  
-      document.body.classList.toggle('dark-mode'); 
+
+  const switchInput = document.getElementById('switch');
+  const switchInner = document.getElementById('switch-inner')
+  const switchLabel = document.getElementById('switch-label')
+
+  switchInput.addEventListener('change', () => { 
+      document.body.classList.toggle('dark-mode');
+      switchInner.classList.toggle('active')
+      switchLabel.classList.toggle('active')     
   });
 });
 
