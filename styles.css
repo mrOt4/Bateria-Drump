@@ -11,6 +11,34 @@ body {
     justify-content: center;
 }
 
+/* danos tamaño al texto, color, convertimos a mayuscula, creamos espaciado
+le damos un margen y sombra de texto */
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    /* Sombra de texto */
+}
+
+/* Estilos para el modo claro, con una transicion para camiar el fondo */
+.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Estilos para el modo oscuro, con una transicion para camiar el fondo */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
 /* Estilos para la fila de drum pads */
 #drum-pad-row {
     display: flex;
@@ -74,6 +102,60 @@ body {
 .drum-pad:hover, .drum-pad.pressed {
     animation: neon-glow 0.3s infinite; /* Aplicar la animación */
 }
+
+.drum-pad[data-key="83"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #FFD740);
+    border: 2px solid #FFD740;
+}
+
+.drum-pad[data-key="68"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #69F0AE);
+    border: 2px solid #69F0AE;
+}
+
+.drum-pad[data-key="70"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #536DFE);
+    border: 2px solid #536DFE;
+}
+
+.drum-pad[data-key="87"] {
+    background-image: url('https://i.pinimg.com/736x/c6/5e/af/c65eafe1a00b505ff4483a94a82a1eff.jpg');
+        background-size: cover;
+        /* Ajusta la imagen para cubrir todo el espacio del drum pad */
+        background-position: center;
+        /* Centra la imagen */
+        border: none;
+        /* Elimina el borde */
+        box-shadow: none;
+        /* Elimina la sombra */
+        transition: transform 0.1s;
+        /* Agrega una transición */
+}
+
+.drum-pad[data-key="69"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #FF5722);
+    border: 2px solid #FF5722;
+}
+
+.drum-pad[data-key="82"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #FF4081);
+    border: 2px solid #FF4081;
+}
+
+.drum-pad[data-key="88"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #00E676);
+    border: 2px solid #00E676;
+}
+
+.drum-pad[data-key="67"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #40C4FF);
+    border: 2px solid #40C4FF;
+}
+
+/* Estilos al pasar el cursor sobre los pads */
+/* .drum-pad:hover {
+    background-color:;
+} */
 
 /* Estilos al presionar los pads */
 .drum-pad:active, .drum-pad.pressed {
