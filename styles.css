@@ -103,6 +103,12 @@ h1 {
     animation: neon-glow 0.3s infinite; /* Aplicar la animación */
 }
 
+.drum-pad[data-key="65"] {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #3364b5);
+    border: 2px solid #3364b5;
+}
+
+
 .drum-pad[data-key="83"] {
     background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 25%, #FFD740);
     border: 2px solid #FFD740;
