@@ -57,7 +57,7 @@ h1 {
     height: 70vw;
     border-radius: 20px;
     max-width: 700px;
-    max-height: 700px
+    max-height: 700px;
 }
 
 /* Estilos para los pads de batería */
@@ -73,7 +73,7 @@ h1 {
     justify-content: center;
     align-items: center;
     background-color: #007bff;
-    color: #fff;
+    color: grey;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -189,22 +189,22 @@ body.dark-mode #drum-pad-container {
 #volumen {
     -webkit-appearance: none;
     width: 200px;
-    height: 20px;
+    height: 2.5px;
     background: #f3f3f3;
-    border-radius: 10px;
+    border-radius: 0px;
     border: 1px solid #ccc;
     outline: none;
     padding: 0;
-    margin: 20px;
+    margin: 20px;    
 }
 
 
 #volumen::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 30px;
+    width: 18px;
     height: 30px;
     background: #0078d4;
-    border-radius: 50%;
+    border-radius: 0px;
     cursor: pointer;
     border: 3px solid #fff;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);

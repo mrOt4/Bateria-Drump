@@ -2,7 +2,7 @@
 //*********Escuchadores*********** */
 //******************************** */
 
-//? Aqui lanzamos le DOM lo primero de todo, para que cargue y analice
+//? Aqui lanzamos el DOM lo primero de todo, para que cargue y analice
 document.addEventListener("DOMContentLoaded", function () {
   //* Selecionamos los elementos de las clases marcadas y los guardamos en unas
   //* nuevas variables
@@ -43,7 +43,7 @@ window.addEventListener("keydown", (e) => {
 });
 
   //*tomamos como valor el 'data-key' y buscamos el elemento audio correspondiente
-  function playSound(pad) {
+ /* function playSound(pad) {
     const key = pad.getAttribute("data-key");
     const audio = document.querySelector(`audio[data-key="${key}"]`);
     if (!audio) return;
@@ -51,45 +51,34 @@ window.addEventListener("keydown", (e) => {
     audio.play(); //!reproduce el que encontró
   }
 });
-
+*/
 //***************************** */
 //*********** GRABAR ********** */
 //***************************** */
 
-document.addEventListener("DOMContentLoaded", function () {
+
   // Resto del código...
 
   // Variables para la grabación de la secuencia
   let secuenciaGrabada = []; // Almacena las teclas pulsadas durante la grabación
   let grabandoSecuencia = false; // Indica si se está grabando una secuencia
+  let time = new Date();
 
   // Listener para grabar la secuencia
   const grabarSecuenciaBtn = document.querySelector(".grabar-secuencia");
   grabarSecuenciaBtn.addEventListener("click", function () {
+    if (grabandoSecuencia) {
+      grabandoSecuencia = false;
+    }
+    else{
+    time = new Date();
     secuenciaGrabada = []; // Reiniciamos la secuencia grabada
     grabandoSecuencia = true; // Indicamos que se está grabando la secuencia
     console.log("Grabando secuencia...");
-  });
-
-  // Listener para reproducir la secuencia
-  const reproducirSecuenciaBtn = document.querySelector(".reproducir-secuencia");
-  reproducirSecuenciaBtn.addEventListener("click", function () {
-    reproducirSecuencia();
-  });
-
-  // Función para reproducir la secuencia grabada
-  function reproducirSecuencia() {
-    if (secuenciaGrabada.length === 0) {
-      console.log("No hay secuencia grabada para reproducir.");
-      return;
     }
-    console.log("Reproduciendo secuencia...");
-    secuenciaGrabada.forEach((key, index) => {
-      setTimeout(() => {
-        playSound(key);
-      }, index * 500); // Reproduce cada sonido con un intervalo de 500ms
-    });
-  }
+  });
+
+
 
   // Resto del código...
 
@@ -101,11 +90,35 @@ document.addEventListener("DOMContentLoaded", function () {
     audio.currentTime = 0;
     audio.play();
     if (grabandoSecuencia) {
-      secuenciaGrabada.push(key); // Registra la tecla pulsada durante la grabación
+      let currentTime = new Date().getTime() - time.getTime();
+      let record = {time: currentTime, key};
+      secuenciaGrabada.push(record);
     }
   }
-});
 
+
+
+// Listener para reproducir la secuencia
+  const reproducirSecuenciaBtn = document.querySelector(".reproducir-secuencia");
+  reproducirSecuenciaBtn.addEventListener("click", function () {
+    reproducirSecuencia();
+  });
+
+//Hacemos que se "toque" nuestra secuencia.
+  // Función para reproducir la secuencia grabada
+  function reproducirSecuencia() {
+    if (secuenciaGrabada.length === 0) {
+      console.log("No hay secuencia grabada para reproducir.");
+      return;
+    }
+    console.log("Reproduciendo secuencia...");
+    secuenciaGrabada.forEach((record) => {
+      setTimeout(() => {
+        playSound(document.querySelector(`.drum-pad[data-key="${record.key}"]`));
+      }, record.time); 
+    });
+  }
+})
 
 //***************************** */
 //******* SWITCH DARKMODE ***** */
@@ -124,4 +137,3 @@ document.addEventListener('DOMContentLoaded', () => {
       switchLabel.classList.toggle('active')     
   });
 });
-
