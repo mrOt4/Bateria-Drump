@@ -11,13 +11,17 @@ body {
     justify-content: center;
 }
 
+
+
 /* danos tamaño al texto, color, convertimos a mayuscula, creamos espaciado
 le damos un margen y sombra de texto */
 h1 {
+    
+    font-family: "Pacifico", cursive;
     text-align: center;
-    font-size: 3rem;
+    font-size: 5rem;
+    font-weight: 700;
     color: #333;
-    text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -38,6 +42,10 @@ h1 {
     transition: background-color 0.3s, color 0.3s;
 }
 
+.dark-mode h1{
+    color: #ffffff
+}
+
 
 /* Estilos para la fila de drum pads */
 #drum-pad-row {
@@ -48,7 +56,7 @@ h1 {
 
 /* Estilos para el contenedor de drum pads */
 #drum-pad-container {
-    background-color: #B6BBC4;
+    background-color: #4E6E81;
     border: 1px solid #F0ECE5;
     flex-wrap: wrap;
     padding: 20px;
@@ -125,7 +133,7 @@ h1 {
 }
 
 .drum-pad[data-key="87"] {
-    background-image: url('https://i.pinimg.com/736x/c6/5e/af/c65eafe1a00b505ff4483a94a82a1eff.jpg');
+    background-image: url(./imgs/marshmello.jpg);
         background-size: cover;
         /* Ajusta la imagen para cubrir todo el espacio del drum pad */
         background-position: center;
@@ -136,6 +144,10 @@ h1 {
         /* Elimina la sombra */
         transition: transform 0.1s;
         /* Agrega una transición */
+}
+
+.dark-mode .drum-pad[data-key="87"] {
+    filter: invert(1);
 }
 
 .drum-pad[data-key="69"] {
@@ -181,38 +193,89 @@ h1 {
 }
 
 body.dark-mode #drum-pad-container {
-    background-color: #A0153E;
+    background-color: #FF0303;
 }
 
 
 /* Estilos para la barra de volumen. Temporal*/ 
 #volumen {
     -webkit-appearance: none;
-    width: 200px;
-    height: 2.5px;
-    background: #f3f3f3;
-    border-radius: 0px;
-    border: 1px solid #ccc;
+    width: 300px;
+    height: 20px;
+    background: linear-gradient(to right, #000 0%, #FF0000 100%);
+    border-radius: 10px;
     outline: none;
-    padding: 0;
-    margin: 20px;    
+    margin: 50px;
 }
-
 
 #volumen::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 18px;
-    height: 30px;
-    background: #0078d4;
-    border-radius: 0px;
+    width: 20px;
+    height: 20px;
+    background: #FF0000;
+    border-radius: 50%;
     cursor: pointer;
-    border: 3px solid #fff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
-#volumen:focus {
-    outline: none;
+#volumen::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #FF0000;
+    border-radius: 50%;
+    cursor: pointer;
 }
+
+/* Para moviles */
+
+@media (min-width: 1080px) {
+    #buttons-container{
+        position: relative;
+        left: 470px;
+        bottom: 483px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1080px) {
+    #volumen{
+        position: relative;
+        left: -470px;
+        bottom: 601px;
+        display: flex;
+        flex-direction: column;
+        transform: rotate(90deg); /* Rotamos la barra 180 grados */
+        writing-mode: bt-lr; /* Modo de escritura de abajo hacia arriba, de izquierda a derecha */
+        gap: 20px;
+    }
+}
+
+
+/*Estilos Botones de grabación y reproduccion */
+
+.grabar-secuencia {
+    background-image: url("./imgs/record.svg");
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid black;
+    border-radius: 100%;
+    background-size: 185%;
+}
+
+.reproducir-secuencia {
+    background-image: url("./imgs/play.svg");
+    width: 50px;
+    height: 50px;
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    border-radius: 100%;
+}
+
+
 
 /* Estilos para el switch de dark mode */
 
@@ -229,14 +292,14 @@ body.dark-mode #drum-pad-container {
     display: inline-block;
     width: 60px;
     height: 30px;
-    background-color: #dede06;
+    background-color: #9336B4;
     border-radius: 15px;
     position: relative;
     cursor: pointer;
 }
 
 .switch-label.active {
-    background-color: rgb(21, 15, 137)
+    background-color: #40128B
 }
 
 .switch-inner {

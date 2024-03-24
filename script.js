@@ -56,9 +56,6 @@ window.addEventListener("keydown", (e) => {
 //*********** GRABAR ********** */
 //***************************** */
 
-
-  // Resto del código...
-
   // Variables para la grabación de la secuencia
   let secuenciaGrabada = []; // Almacena las teclas pulsadas durante la grabación
   let grabandoSecuencia = false; // Indica si se está grabando una secuencia
@@ -77,10 +74,6 @@ window.addEventListener("keydown", (e) => {
     console.log("Grabando secuencia...");
     }
   });
-
-
-
-  // Resto del código...
 
   // Modificamos la función playSound para que registre las teclas pulsadas durante la grabación
   function playSound(pad) {
